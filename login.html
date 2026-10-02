@@ -1,0 +1,190 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Winter Arc - Login</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #07111f, #102b43);
+    color: white;
+}
+
+.login-box {
+    width: 380px;
+    max-width: 90%;
+    padding: 35px;
+    border-radius: 22px;
+    background: rgba(10, 25, 42, 0.95);
+    border: 1px solid #31516d;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.logo {
+    text-align: center;
+    font-size: 45px;
+}
+
+h1 {
+    text-align: center;
+    margin: 8px 0;
+}
+
+.subtitle {
+    text-align: center;
+    color: #9eb3c7;
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 7px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    border-radius: 10px;
+    border: 1px solid #3b5870;
+    background: #071522;
+    color: white;
+    font-size: 16px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #7dd3fc;
+}
+
+button {
+    width: 100%;
+    margin-top: 22px;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: white;
+    color: #07111f;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #dff5ff;
+}
+
+#error {
+    text-align: center;
+    color: #ff8080;
+    margin-top: 15px;
+    min-height: 20px;
+}
+
+.info {
+    margin-top: 20px;
+    text-align: center;
+    color: #71869a;
+    font-size: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="login-box">
+
+    <div class="logo">❄️</div>
+
+    <h1>WINTER ARC</h1>
+
+    <div class="subtitle">
+        Build Discipline • Build Yourself
+    </div>
+
+    <form id="loginForm">
+
+        <label>Login ID</label>
+
+        <input
+            type="text"
+            id="username"
+            placeholder="Enter Login ID"
+            required
+        >
+
+        <label>Password</label>
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Enter Password"
+            required
+        >
+
+        <button type="submit">
+            🔐 LOGIN
+        </button>
+
+        <div id="error"></div>
+
+    </form>
+
+    <div class="info">
+        Winter Arc Challenge
+    </div>
+
+</div>
+
+<script>
+
+const LOGIN_ID = "admin";
+const PASSWORD = "winterarc2026";
+
+document.getElementById("loginForm").addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const username =
+        document.getElementById("username").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+    if (username === LOGIN_ID && password === PASSWORD) {
+
+        sessionStorage.setItem(
+            "winterArcLogin",
+            "true"
+        );
+
+        window.location.href =
+            "https://shubhamgyl000-ai.github.io/WINTER-ARC-CHECKLIST/";
+
+    } else {
+
+        document.getElementById("error").textContent =
+            "❌ Invalid Login ID or Password";
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
+```
