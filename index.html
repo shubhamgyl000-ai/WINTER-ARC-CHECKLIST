@@ -7,9 +7,7 @@
 <title>Winter Arc Challenge</title>
 
 <style>
-*{
-    box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
     margin:0;
@@ -18,9 +16,9 @@ body{
     color:#eef6ff;
 }
 
-/* ================= LOGIN ================= */
+/* ================= AUTH ================= */
 
-#loginPage{
+#authPage{
     min-height:100vh;
     display:flex;
     justify-content:center;
@@ -28,8 +26,8 @@ body{
     background:linear-gradient(135deg,#07111f,#102b43);
 }
 
-.login-box{
-    width:390px;
+.auth-box{
+    width:410px;
     max-width:92%;
     padding:35px;
     border-radius:22px;
@@ -38,49 +36,71 @@ body{
     box-shadow:0 20px 70px rgba(0,0,0,.5);
 }
 
-.login-logo{
+.logo{
     text-align:center;
     font-size:50px;
 }
 
-.login-box h1{
+.auth-box h1{
     text-align:center;
     margin:8px 0;
 }
 
-.login-subtitle{
+.subtitle{
     text-align:center;
     color:#9db0c4;
-    margin-bottom:28px;
+    margin-bottom:25px;
 }
 
-.login-box label{
-    display:block;
-    margin:15px 0 7px;
+.tabs{
+    display:flex;
+    gap:8px;
+    margin-bottom:22px;
+}
+
+.tabs button{
+    flex:1;
+    padding:11px;
+    border-radius:10px;
+    border:1px solid #31516d;
+    background:#102338;
+    color:white;
+    cursor:pointer;
     font-weight:bold;
 }
 
-.login-box input{
+.tabs button.active{
+    background:white;
+    color:#07111f;
+}
+
+.auth-form label{
+    display:block;
+    margin:14px 0 7px;
+    font-weight:bold;
+}
+
+.auth-form input{
     width:100%;
-    padding:14px;
-    border-radius:11px;
+    padding:13px;
+    border-radius:10px;
     border:1px solid #38536b;
     background:#071522;
     color:white;
     font-size:16px;
 }
 
-.login-box input:focus{
+.auth-form input:focus{
     outline:none;
     border-color:#7dd3fc;
 }
 
-.login-btn{
+.auth-btn{
     width:100%;
     padding:14px;
-    margin-top:22px;
+    margin-top:20px;
     border:0;
-    border-radius:11px;
+    border-radius:10px;
     background:white;
     color:#07111f;
     font-size:16px;
@@ -88,22 +108,29 @@ body{
     cursor:pointer;
 }
 
-.login-btn:hover{
+.auth-btn:hover{
     background:#dff5ff;
 }
 
-#error{
+.message{
     text-align:center;
-    color:#ff8080;
     margin-top:14px;
     min-height:20px;
 }
 
-.login-info{
+.success{
+    color:#7dffb2;
+}
+
+.error{
+    color:#ff8080;
+}
+
+.small{
     text-align:center;
     color:#71869a;
     font-size:12px;
-    margin-top:20px;
+    margin-top:18px;
 }
 
 /* ================= CHECKLIST ================= */
@@ -162,10 +189,6 @@ button:hover{
     border-radius:20px;
     background:linear-gradient(135deg,#102b43,#0b1727);
     border:1px solid #28445e;
-}
-
-.hero h2{
-    margin-top:0;
 }
 
 .hero input{
@@ -306,247 +329,319 @@ button:hover{
 
 <body>
 
-<!-- =====================================================
-     LOGIN PAGE
-===================================================== -->
+<!-- ================= AUTH PAGE ================= -->
 
-<div id="loginPage">
+<div id="authPage">
 
-    <div class="login-box">
+<div class="auth-box">
 
-        <div class="login-logo">❄️</div>
+    <div class="logo">❄️</div>
 
-        <h1>WINTER ARC</h1>
+    <h1>WINTER ARC</h1>
 
-        <div class="login-subtitle">
-            Build Discipline • Build Yourself
+    <div class="subtitle">
+        Build Discipline • Build Yourself
+    </div>
+
+    <div class="tabs">
+
+        <button
+            id="loginTab"
+            class="active"
+            onclick="showLogin()">
+            Login
+        </button>
+
+        <button
+            id="registerTab"
+            onclick="showRegister()">
+            Register
+        </button>
+
+    </div>
+
+
+    <!-- LOGIN -->
+
+    <form
+        id="loginForm"
+        class="auth-form">
+
+        <label>Login ID</label>
+
+        <input
+            type="text"
+            id="loginUsername"
+            placeholder="Enter your ID"
+            required
+        >
+
+        <label>Password</label>
+
+        <input
+            type="password"
+            id="loginPassword"
+            placeholder="Enter password"
+            required
+        >
+
+        <button
+            class="auth-btn"
+            type="submit">
+            🔐 LOGIN
+        </button>
+
+        <div
+            id="loginMessage"
+            class="message">
         </div>
 
-        <form id="loginForm">
+    </form>
 
-            <label>Login ID</label>
 
-            <input
-                type="text"
-                id="username"
-                placeholder="Enter Login ID"
-                required
-            >
+    <!-- REGISTER -->
 
-            <label>Password</label>
+    <form
+        id="registerForm"
+        class="auth-form"
+        style="display:none;">
 
-            <input
-                type="password"
-                id="password"
-                placeholder="Enter Password"
-                required
-            >
+        <label>Create Login ID</label>
 
-            <button class="login-btn" type="submit">
-                🔐 LOGIN
-            </button>
+        <input
+            type="text"
+            id="registerUsername"
+            placeholder="Choose your ID"
+            minlength="3"
+            required
+        >
 
-            <div id="error"></div>
+        <label>Create Password</label>
 
-        </form>
+        <input
+            type="password"
+            id="registerPassword"
+            placeholder="Create password"
+            minlength="4"
+            required
+        >
 
-        <div class="login-info">
-            30 Day Winter Arc Challenge
+        <label>Confirm Password</label>
+
+        <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Confirm password"
+            minlength="4"
+            required
+        >
+
+        <button
+            class="auth-btn"
+            type="submit">
+            ✨ CREATE ACCOUNT
+        </button>
+
+        <div
+            id="registerMessage"
+            class="message">
         </div>
 
+    </form>
+
+
+    <div class="small">
+        Your checklist data is saved in this browser.
     </div>
 
 </div>
 
+</div>
 
-<!-- =====================================================
-     WINTER ARC CHECKLIST
-===================================================== -->
+
+<!-- ================= CHECKLIST ================= -->
 
 <div id="checklistPage">
 
 <div class="container">
 
-    <div class="top">
+<div class="top">
 
-        <div>
-            <h1>❄ WINTER ARC</h1>
+<div>
+    <h1>❄ WINTER ARC</h1>
 
-            <div class="muted">
-                BUILD DISCIPLINE • BUILD YOURSELF • ONE DAY AT A TIME
-            </div>
-        </div>
-
-        <div class="actions">
-
-            <button onclick="logout()">
-                🚪 Logout
-            </button>
-
-            <button onclick="backup()">
-                ⬇ Backup
-            </button>
-
-            <button onclick="restore()">
-                ⬆ Restore
-            </button>
-
-            <button onclick="resetAll()">
-                🗑 Clear
-            </button>
-
-        </div>
-
+    <div class="muted">
+        BUILD DISCIPLINE • BUILD YOURSELF • ONE DAY AT A TIME
     </div>
+</div>
+
+<div class="actions">
+
+    <button onclick="logout()">
+        🚪 Logout
+    </button>
+
+    <button onclick="backup()">
+        ⬇ Backup
+    </button>
+
+    <button onclick="restore()">
+        ⬆ Restore
+    </button>
+
+    <button onclick="resetAll()">
+        🗑 Clear
+    </button>
+
+</div>
+
+</div>
 
 
-    <div class="hero">
+<div class="hero">
 
-        <h2>
-            30 DAY DISCIPLINE CHALLENGE 🔥
-        </h2>
+<h2>
+    30 DAY DISCIPLINE CHALLENGE 🔥
+</h2>
 
-        <label>
-            Start Date
-        </label>
+<label>
+    Start Date
+</label>
 
-        <br><br>
+<br><br>
 
-        <input
-            id="startDate"
-            type="date"
-            onchange="save()"
-        >
+<input
+    id="startDate"
+    type="date"
+    onchange="save()"
+>
 
-        <div class="progress">
-            <div
-                class="bar"
-                id="bar">
-            </div>
-        </div>
-
-        <b id="progressText">
-            0%
-        </b>
-
-        Overall Progress
-
+<div class="progress">
+    <div
+        class="bar"
+        id="bar">
     </div>
+</div>
+
+<b id="progressText">
+    0%
+</b>
+
+Overall Progress
+
+</div>
 
 
-    <div class="grid">
+<div class="grid">
 
-        <div class="stat">
+<div class="stat">
 
-            <div
-                class="num"
-                id="overall">
-                0%
-            </div>
+<div
+class="num"
+id="overall">
+0%
+</div>
 
-            <div class="label">
-                Overall Progress
-            </div>
+<div class="label">
+Overall Progress
+</div>
 
-        </div>
-
-
-        <div class="stat">
-
-            <div
-                class="num"
-                id="streak">
-                0
-            </div>
-
-            <div class="label">
-                Current Streak
-            </div>
-
-        </div>
+</div>
 
 
-        <div class="stat">
+<div class="stat">
 
-            <div
-                class="num"
-                id="best">
-                0
-            </div>
+<div
+class="num"
+id="streak">
+0
+</div>
 
-            <div class="label">
-                Best Streak
-            </div>
+<div class="label">
+Current Streak
+</div>
 
-        </div>
-
-
-        <div class="stat">
-
-            <div
-                class="num"
-                id="perfect">
-                0
-            </div>
-
-            <div class="label">
-                Perfect Days
-            </div>
-
-        </div>
-
-    </div>
+</div>
 
 
-    <div class="panel">
+<div class="stat">
 
-        <h2>
-            🧊 30 Day Habit Tracker
-        </h2>
+<div
+class="num"
+id="best">
+0
+</div>
 
-        <div
-            class="days"
-            id="days">
-        </div>
+<div class="label">
+Best Streak
+</div>
 
-    </div>
-
-
-    <div class="panel">
-
-        <h2 id="dayTitle">
-            📝 Day 1
-        </h2>
-
-        <div
-            class="habits"
-            id="habits">
-        </div>
+</div>
 
 
-        <h3>
-            📝 Daily Journal
-        </h3>
+<div class="stat">
 
-        <textarea
-            class="note"
-            id="note"
-            placeholder="Write what you learned, achieved, struggled with..."
-        ></textarea>
+<div
+class="num"
+id="perfect">
+0
+</div>
+
+<div class="label">
+Perfect Days
+</div>
+
+</div>
+
+</div>
 
 
-        <p id="score">
-            0 / 12 habits completed
-        </p>
+<div class="panel">
+
+<h2>
+🧊 30 Day Habit Tracker
+</h2>
+
+<div
+class="days"
+id="days">
+</div>
+
+</div>
 
 
-        <button
-            class="complete-btn"
-            onclick="completeAll()">
-            ✓ Complete All Habits
-        </button>
+<div class="panel">
 
-    </div>
+<h2 id="dayTitle">
+📝 Day 1
+</h2>
+
+<div
+class="habits"
+id="habits">
+</div>
+
+<h3>
+📝 Daily Journal
+</h3>
+
+<textarea
+class="note"
+id="note"
+placeholder="Write what you learned, achieved, struggled with..."
+></textarea>
+
+<p id="score">
+0 / 12 habits completed
+</p>
+
+<button
+class="complete-btn"
+onclick="completeAll()">
+✓ Complete All Habits
+</button>
+
+</div>
 
 </div>
 
@@ -554,90 +649,226 @@ button:hover{
 
 
 <input
-    type="file"
-    id="file"
-    accept=".json"
-    hidden
+type="file"
+id="file"
+accept=".json"
+hidden
 >
 
 
 <script>
 
 /* =====================================================
-   LOGIN SETTINGS
+   ACCOUNT SYSTEM
 ===================================================== */
 
-const LOGIN_ID = "admin";
+function getAccounts(){
 
-const PASSWORD = "winterarc2026";
+    return JSON.parse(
+        localStorage.getItem("winterArcAccounts")
+        || "{}"
+    );
+
+}
+
+
+function saveAccounts(accounts){
+
+    localStorage.setItem(
+        "winterArcAccounts",
+        JSON.stringify(accounts)
+    );
+
+}
 
 
 /* =====================================================
-   LOGIN SYSTEM
+   LOGIN / REGISTER TABS
 ===================================================== */
-
-const loginPage =
-    document.getElementById("loginPage");
-
-const checklistPage =
-    document.getElementById("checklistPage");
-
-
-function showChecklist(){
-
-    loginPage.style.display = "none";
-
-    checklistPage.style.display = "block";
-
-    render();
-
-}
-
 
 function showLogin(){
 
-    loginPage.style.display = "flex";
+    document.getElementById("loginForm")
+        .style.display="block";
 
-    checklistPage.style.display = "none";
+    document.getElementById("registerForm")
+        .style.display="none";
 
-}
+    document.getElementById("loginTab")
+        .classList.add("active");
 
-
-/* Check previous login */
-
-if(
-    sessionStorage.getItem("winterArcLogin")
-    === "true"
-){
-
-    showChecklist();
+    document.getElementById("registerTab")
+        .classList.remove("active");
 
 }
 
 
-/* Login */
+function showRegister(){
+
+    document.getElementById("loginForm")
+        .style.display="none";
+
+    document.getElementById("registerForm")
+        .style.display="block";
+
+    document.getElementById("loginTab")
+        .classList.remove("active");
+
+    document.getElementById("registerTab")
+        .classList.add("active");
+
+}
+
+
+/* =====================================================
+   REGISTER
+===================================================== */
 
 document
-.getElementById("loginForm")
-.addEventListener("submit",function(event){
+.getElementById("registerForm")
+.addEventListener(
+"submit",
+function(event){
 
     event.preventDefault();
 
+
     const username =
         document
-        .getElementById("username")
+        .getElementById("registerUsername")
         .value
         .trim();
 
+
     const password =
         document
-        .getElementById("password")
+        .getElementById("registerPassword")
         .value;
 
 
+    const confirm =
+        document
+        .getElementById("confirmPassword")
+        .value;
+
+
+    const message =
+        document
+        .getElementById("registerMessage");
+
+
+    if(username.length < 3){
+
+        message.className="message error";
+
+        message.textContent =
+            "ID must contain at least 3 characters.";
+
+        return;
+
+    }
+
+
+    if(password.length < 4){
+
+        message.className="message error";
+
+        message.textContent =
+            "Password must contain at least 4 characters.";
+
+        return;
+
+    }
+
+
+    if(password !== confirm){
+
+        message.className="message error";
+
+        message.textContent =
+            "Passwords do not match.";
+
+        return;
+
+    }
+
+
+    const accounts = getAccounts();
+
+
+    if(accounts[username]){
+
+        message.className="message error";
+
+        message.textContent =
+            "❌ This Login ID already exists.";
+
+        return;
+
+    }
+
+
+    accounts[username] = {
+
+        password:password
+
+    };
+
+
+    saveAccounts(accounts);
+
+
+    message.className="message success";
+
+    message.textContent =
+        "✅ Account created! You can now login.";
+
+
+    document
+    .getElementById("registerForm")
+    .reset();
+
+});
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+document
+.getElementById("loginForm")
+.addEventListener(
+"submit",
+function(event){
+
+    event.preventDefault();
+
+
+    const username =
+        document
+        .getElementById("loginUsername")
+        .value
+        .trim();
+
+
+    const password =
+        document
+        .getElementById("loginPassword")
+        .value;
+
+
+    const accounts =
+        getAccounts();
+
+
+    const message =
+        document
+        .getElementById("loginMessage");
+
+
     if(
-        username === LOGIN_ID &&
-        password === PASSWORD
+        accounts[username] &&
+        accounts[username].password === password
     ){
 
         sessionStorage.setItem(
@@ -645,8 +876,15 @@ document
             "true"
         );
 
-        document.getElementById("error")
-        .textContent = "";
+
+        sessionStorage.setItem(
+            "winterArcUser",
+            username
+        );
+
+
+        message.textContent="";
+
 
         showChecklist();
 
@@ -654,16 +892,51 @@ document
 
     else{
 
-        document.getElementById("error")
-        .textContent =
-        "❌ Invalid Login ID or Password";
+        message.className="message error";
+
+        message.textContent =
+            "❌ Invalid Login ID or Password.";
 
     }
 
 });
 
 
-/* Logout */
+/* =====================================================
+   AUTH PAGE
+===================================================== */
+
+function showChecklist(){
+
+    document
+    .getElementById("authPage")
+    .style.display="none";
+
+    document
+    .getElementById("checklistPage")
+    .style.display="block";
+
+    render();
+
+}
+
+
+function showAuth(){
+
+    document
+    .getElementById("authPage")
+    .style.display="flex";
+
+    document
+    .getElementById("checklistPage")
+    .style.display="none";
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
 
 function logout(){
 
@@ -671,7 +944,11 @@ function logout(){
         "winterArcLogin"
     );
 
-    showLogin();
+    sessionStorage.removeItem(
+        "winterArcUser"
+    );
+
+    showAuth();
 
 }
 
@@ -680,39 +957,40 @@ function logout(){
    WINTER ARC DATA
 ===================================================== */
 
-const HABITS = [
+const HABITS=[
 
-    "Wake up on time",
-
-    "Drink enough water",
-
-    "Exercise / workout",
-
-    "Study / DSA",
-
-    "Code / Build project",
-
-    "Read / Learn",
-
-    "No unnecessary scrolling",
-
-    "Healthy food",
-
-    "Complete important task",
-
-    "Practice communication",
-
-    "Plan tomorrow",
-
-    "Sleep on time"
+"Wake up on time",
+"Drink enough water",
+"Exercise / workout",
+"Study / DSA",
+"Code / Build project",
+"Read / Learn",
+"No unnecessary scrolling",
+"Healthy food",
+"Complete important task",
+"Practice communication",
+"Plan tomorrow",
+"Sleep on time"
 
 ];
 
 
+let currentUser =
+    sessionStorage.getItem("winterArcUser");
+
+
+function storageKey(){
+
+    return "winterArcData_" + currentUser;
+
+}
+
+
 let data =
 JSON.parse(
-    localStorage.getItem("winterArcData")
-    || "null"
+localStorage.getItem(
+    storageKey()
+) || "null"
 )
 ||
 {
@@ -721,16 +999,18 @@ JSON.parse(
 };
 
 
-let selected = 1;
+let selected=1;
 
 
-/* Get day */
+/* =====================================================
+   DAY DATA
+===================================================== */
 
 function dayData(day){
 
     if(!data.days[day]){
 
-        data.days[day] = {
+        data.days[day]={
 
             checks:
             Array(12).fill(false),
@@ -747,7 +1027,7 @@ function dayData(day){
 
 
 /* =====================================================
-   DAYS
+   RENDER DAYS
 ===================================================== */
 
 function renderDays(){
@@ -755,18 +1035,29 @@ function renderDays(){
     const days =
         document.getElementById("days");
 
-    days.innerHTML = "";
+    days.innerHTML="";
 
 
-    for(let d=1;d<=30;d++){
+    for(
+        let d=1;
+        d<=30;
+        d++
+    ){
 
         const x =
             document.createElement("div");
 
+
         x.className =
             "day"
             +
-            (d===selected ? " active" : "")
+            (
+                d===selected
+                ?
+                " active"
+                :
+                ""
+            )
             +
             (
                 dayData(d)
@@ -779,12 +1070,12 @@ function renderDays(){
             );
 
 
-        x.textContent = d;
+        x.textContent=d;
 
 
-        x.onclick = function(){
+        x.onclick=function(){
 
-            selected = d;
+            selected=d;
 
             render();
 
@@ -799,7 +1090,7 @@ function renderDays(){
 
 
 /* =====================================================
-   RENDER HABITS
+   RENDER
 ===================================================== */
 
 function render(){
@@ -822,34 +1113,36 @@ function render(){
         .getElementById("habits");
 
 
-    habits.innerHTML = "";
+    habits.innerHTML="";
 
 
-    HABITS.forEach(function(name,index){
+    HABITS.forEach(
+    function(name,index){
 
         const div =
             document.createElement("div");
 
-        div.className = "habit";
+
+        div.className="habit";
 
 
-        div.innerHTML = `
+        div.innerHTML=`
 
-            <input
-                type="checkbox"
-                ${x.checks[index] ? "checked" : ""}
-            >
+        <input
+            type="checkbox"
+            ${x.checks[index]?"checked":""}
+        >
 
-            <div>
-                ${name}
-            </div>
+        <div>
+            ${name}
+        </div>
 
         `;
 
 
         div
         .querySelector("input")
-        .onchange = function(event){
+        .onchange=function(event){
 
             x.checks[index] =
                 event.target.checked;
@@ -870,17 +1163,23 @@ function render(){
         document.getElementById("note");
 
 
-    note.value = x.note;
+    note.value=x.note;
 
 
-    note.oninput = function(event){
+    note.oninput=function(event){
 
-        x.note =
+        x.note=
             event.target.value;
 
         save();
 
     };
+
+
+    document
+    .getElementById("startDate")
+    .value=
+        data.startDate || "";
 
 
     updateStats();
@@ -894,12 +1193,16 @@ function render(){
 
 function updateStats(){
 
-    let total = 0;
+    let total=0;
 
-    let perfect = 0;
+    let perfect=0;
 
 
-    for(let d=1;d<=30;d++){
+    for(
+        let d=1;
+        d<=30;
+        d++
+    ){
 
         const completed =
             dayData(d)
@@ -911,7 +1214,7 @@ function updateStats(){
         total += completed;
 
 
-        if(completed === 12){
+        if(completed===12){
 
             perfect++;
 
@@ -922,26 +1225,26 @@ function updateStats(){
 
     const percentage =
         Math.round(
-            total / 360 * 100
+            total/360*100
         );
 
 
     document
     .getElementById("overall")
     .textContent =
-        percentage + "%";
+        percentage+"%";
 
 
     document
     .getElementById("progressText")
     .textContent =
-        percentage + "%";
+        percentage+"%";
 
 
     document
     .getElementById("bar")
     .style.width =
-        percentage + "%";
+        percentage+"%";
 
 
     document
@@ -950,12 +1253,16 @@ function updateStats(){
         perfect;
 
 
-    let current = 0;
+    let current=0;
 
-    let best = 0;
+    let best=0;
 
 
-    for(let d=1;d<=30;d++){
+    for(
+        let d=1;
+        d<=30;
+        d++
+    ){
 
         if(
             dayData(d)
@@ -965,7 +1272,7 @@ function updateStats(){
 
             current++;
 
-            best =
+            best=
                 Math.max(
                     best,
                     current
@@ -975,7 +1282,7 @@ function updateStats(){
 
         else{
 
-            current = 0;
+            current=0;
 
         }
 
@@ -984,19 +1291,17 @@ function updateStats(){
 
     document
     .getElementById("streak")
-    .textContent =
-        best;
+    .textContent=best;
 
 
     document
     .getElementById("best")
-    .textContent =
-        best;
+    .textContent=best;
 
 
     document
     .getElementById("score")
-    .textContent =
+    .textContent=
         dayData(selected)
         .checks
         .filter(Boolean)
@@ -1020,7 +1325,7 @@ function save(){
 
 
     localStorage.setItem(
-        "winterArcData",
+        storageKey(),
         JSON.stringify(data)
     );
 
@@ -1049,19 +1354,19 @@ function completeAll(){
 
 
 /* =====================================================
-   RESET
+   CLEAR DATA
 ===================================================== */
 
 function resetAll(){
 
     if(
         confirm(
-            "Clear all Winter Arc data?"
+            "Clear all your Winter Arc data?"
         )
     ){
 
         localStorage.removeItem(
-            "winterArcData"
+            storageKey()
         );
 
         location.reload();
@@ -1079,18 +1384,16 @@ function backup(){
 
     const file =
         new Blob(
-            [
-                JSON.stringify(
-                    data,
-                    null,
-                    2
-                )
-            ],
-            {
-                type:
-                "application/json"
-            }
-        );
+        [
+            JSON.stringify(
+                data,
+                null,
+                2
+            )
+        ],
+        {
+            type:"application/json"
+        });
 
 
     const link =
@@ -1140,36 +1443,35 @@ function(event){
         new FileReader();
 
 
-    reader.onload =
-        function(){
+    reader.onload=function(){
 
-            try{
+        try{
 
-                data =
-                    JSON.parse(
-                        reader.result
-                    );
-
-
-                localStorage.setItem(
-                    "winterArcData",
-                    JSON.stringify(data)
+            data =
+                JSON.parse(
+                    reader.result
                 );
 
 
-                location.reload();
+            localStorage.setItem(
+                storageKey(),
+                JSON.stringify(data)
+            );
 
-            }
 
-            catch{
+            location.reload();
 
-                alert(
-                    "Invalid backup file."
-                );
+        }
 
-            }
+        catch{
 
-        };
+            alert(
+                "Invalid backup file."
+            );
+
+        }
+
+    };
 
 
     reader.readAsText(file);
@@ -1178,25 +1480,34 @@ function(event){
 
 
 /* =====================================================
-   START DATE
-===================================================== */
-
-document
-.getElementById("startDate")
-.value =
-data.startDate || "";
-
-
-/* =====================================================
-   START
+   AUTO LOGIN
 ===================================================== */
 
 if(
-    sessionStorage.getItem("winterArcLogin")
-    === "true"
+    sessionStorage.getItem(
+        "winterArcLogin"
+    ) === "true"
 ){
 
-    render();
+    currentUser =
+        sessionStorage.getItem(
+            "winterArcUser"
+        );
+
+    data =
+        JSON.parse(
+            localStorage.getItem(
+                storageKey()
+            ) || "null"
+        )
+        ||
+        {
+            startDate:"",
+            days:{}
+        };
+
+
+    showChecklist();
 
 }
 
